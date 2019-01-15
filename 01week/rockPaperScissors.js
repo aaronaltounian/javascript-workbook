@@ -12,11 +12,11 @@ function rockPaperScissors(a, b) {
   
   // define variables for win states:
   const tie = "It's a tie!";
-  const player1Wins = "Player 1 Wins!";
-  const player2Wins = "Player 2 Wins!";
+  const player1Wins = "Hand one wins!";
+  const player2Wins = "Hand two wins!";
   // take the function's arguments (player choices) and make them lowercase so they still run even if a player capitalizes a letter:
-  let hand1 = a.toLowerCase();
-  let hand2 = b.toLowerCase();
+  let hand1 = a.toLowerCase().trim();
+  let hand2 = b.toLowerCase().trim();
 
   // check if the choices are valid/create a boolean so it can be compared in the results stage:
   function choiceChecker(hand1, hand2) {
