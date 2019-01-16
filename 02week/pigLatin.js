@@ -12,22 +12,20 @@ function pigLatin(a) {
 
   // make input lowercase and trim it:
   let word = a.toLowerCase().trim();
+  // define search letters (vowels) as a variable:
+  let regex = /[aeiou]/g;
   // check if first letter is a vowel, and if so append 'yay' and return the new piglatin word:
-  let regex = /[aeiou]/gi;
   if (word[0].match(regex)){
-    word = word + 'yay';
-    return word;
+      // make piglatin word & return it:
+    return word = word + 'yay';
   } 
   // or if the word starts with a consonant(s) then split the word at the first vowel, move the beginning of the word to the end and append 'ay', then return the new piglatin word:
   else {
     // get the index number of the first vowel in the word:
     let indexedVowel = word.indexOf(word.match(regex)[0]);
-    // make the new word equal to a substring of the input beginning at the index number of the first vowel, plus a substring of the input beginning at 0 which ends at the index number of the first vowel, plus 'ay':
-    word = word.substring(indexedVowel) + word.substring(0, indexedVowel) + 'ay';
-    // return the new piglatin word!:
-    return word;
+    // make the new word equal to a substring of the input beginning at the index number of the first vowel, plus a substring of the input beginning at 0 which ends at the index number of the first vowel, plus 'ay', then return it:
+    return word = word.substring(indexedVowel) + word.substring(0, indexedVowel) + 'ay';
   }
-
 }
 
 
