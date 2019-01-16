@@ -13,7 +13,7 @@ function pigLatin(a) {
   // make input lowercase and trim it:
   let word = a.toLowerCase().trim();
   // define search letters (vowels) as a variable:
-  let regex = /[aeiou]/g;
+  let regex = /[aeiou]/;
   // check if first letter is a vowel, and if so append 'yay' and return the new piglatin word:
   if (word[0].match(regex)){
     // make piglatin word & return it:
