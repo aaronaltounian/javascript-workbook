@@ -22,7 +22,7 @@ function pigLatin(a) {
   // or if the word starts with a consonant(s) then split the word at the first vowel, move the beginning of the word to the end and append 'ay', then return the new piglatin word:
   else {
     // get the index number of the first vowel in the word:
-    let indexedVowel = word.indexOf(word.match(regex)[0]);
+    let indexedVowel = word.indexOf(word.match(regex));
     // make the new word equal to a substring of the input beginning at the index number of the first vowel, plus a substring of the input beginning at 0 which ends at the index number of the first vowel, plus 'ay', then return it:
     return word = word.substring(indexedVowel) + word.substring(0, indexedVowel) + 'ay';
   }
