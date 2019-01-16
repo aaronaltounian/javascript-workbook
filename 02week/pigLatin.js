@@ -8,9 +8,15 @@ const rl = readline.createInterface({
 });
 
 
-function pigLatin(word) {
+function pigLatin(a) {
 
   // Your code here
+  let word = a.toLowerCase().trim();
+  let regex = /aeiou/gi;
+  if (word[0].match(regex)){
+    word = word + 'yay';
+    return word;
+  }
 
 }
 
