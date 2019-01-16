@@ -16,7 +16,7 @@ function pigLatin(a) {
   let regex = /[aeiou]/g;
   // check if first letter is a vowel, and if so append 'yay' and return the new piglatin word:
   if (word[0].match(regex)){
-      // make piglatin word & return it:
+    // make piglatin word & return it:
     return word = word + 'yay';
   } 
   // or if the word starts with a consonant(s) then split the word at the first vowel, move the beginning of the word to the end and append 'ay', then return the new piglatin word:
