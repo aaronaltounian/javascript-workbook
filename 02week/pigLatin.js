@@ -16,13 +16,13 @@ function pigLatin(a) {
   for ( let i = 0; i <= word.length; i++ ) {
     //use a for loop to iterate through the vowels in the array:
     for ( let v = 0; v <= vowels.length; v++ ) {
-      // if the first letter in the word is a vowel, append 'yay' to the word:
+      // if the first letter in the word is not a vowel, find the first vowel by checking each letter of the input word against each vowel within the array:
       if ( word[0] !== vowels[v] ) {
         if ( word[i] == vowels[v] ) {
           return word = word.substring(i) + word.substring(0, i) + 'ay';
         }
       }
-      // or else check each letter in the word against each vowel in the array, if a letter is a vowel then create a substring based on its position within the word:
+      // or else if the first letter in the word is a vowel:
       else return word + 'yay';
     }
   }
