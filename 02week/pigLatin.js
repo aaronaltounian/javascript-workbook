@@ -18,7 +18,12 @@ function pigLatin(a) {
     for ( let v = 0; v <= vowels.length; v++ ) {
       // if the first letter in the word is not a vowel, find the first vowel by checking each letter of the input word against each vowel within the array:
       if ( word[0] !== vowels[v] ) {
-        if ( word[i] == vowels[v] ) {
+        // if the first vowel is 'u' check if it has a 'q' before it and if so split the word after the 'u':
+        if ( word[i] == 'u' && word[i - 1] == 'q') {
+          return word = word.substring(i+1) + word.substring(0, (i+1)) + 'ay';
+        }
+        // otherwise just split the word at the first vowel and make the new pig latin word:
+        else if ( word[i] == vowels[v] ) {
           return word = word.substring(i) + word.substring(0, i) + 'ay';
         }
       }
