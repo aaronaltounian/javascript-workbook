@@ -7,7 +7,29 @@ const rl = readline.createInterface({
   output: process.stdout
 });
 
+function pigLatin(a) {
+  // make input lowercase and trim it:
+  let word = a.toLowerCase().trim();
+  // define array containing vowels:
+  const vowels = ['a', 'e', 'i', 'o', 'u'];
+  // use a for loop to iterate through the letters of the word:
+  for ( let i = 0; i <= word.length; i++ ) {
+    //use a for loop to iterate through the vowels in the array:
+    for ( let v = 0; v <= vowels.length; v++ ) {
+      // if the first letter in the word is a vowel, append 'yay' to the word:
+      if ( word[0] == vowels[v] ) {
+        return word + 'yay';
+      }
+      // or else check each letter in the word against each vowel in the array, if a letter is a vowel then create a substring based on its position within the word:
+      else if ( word[i] == vowels[v] ) {
+        return word = word.substring(i) + word.substring(0, i) + 'ay';
+      }
+    }
+  }
+}
 
+//   vvv   !!!   Alternate method with regex   !!!   vvv   !!!   vvv   !!!   Alternate method with regex   !!! vvv
+/*
 function pigLatin(a) {
 
   // make input lowercase and trim it:
@@ -27,6 +49,7 @@ function pigLatin(a) {
     return word = word.substring(indexedVowel) + word.substring(0, indexedVowel) + 'ay';
   }
 }
+*/
 
 
 function getPrompt() {
