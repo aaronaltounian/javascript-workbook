@@ -1,0 +1,15 @@
+{
+  "name": "testing",
+  "version": "1.0.0",
+  "description": "class 4 tests",
+  "main": "tests.js",
+  "scripts": {
+    "test": "./node_modules/.bin/mocha"
+  },
+  "author": "hashmilk",
+  "license": "ISC",
+  "dependencies": {},
+  "devDependencies": {
+    "mocha": "^5.2.0"
+  }
+}
