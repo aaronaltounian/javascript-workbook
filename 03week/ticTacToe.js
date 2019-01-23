@@ -23,6 +23,7 @@ function printBoard() {
   console.log('2 ' + board[2].join(' | '));
 }
 
+// define reset function to reset board after a game:
 let reset = () => {
   board = [
     [' ', ' ', ' '],
@@ -30,13 +31,17 @@ let reset = () => {
     [' ', ' ', ' ']
   ];
   playerTurn = 'X';
+  turnCount = 1;
 }
 
-let playerString = playerTurn + playerTurn + playerTurn;
 function horizontalWin() {
-  // using for/in with string comparators and joining the row arrays together:
+  // make a string depending on the playerTurn, 'XXX' or 'OOO' to compare against:
+  let playerString = playerTurn + playerTurn + playerTurn;
+  // method using for/in with string comparators and joining the row arrays together:
   for( let i in board ) {
+    // join each subarray into a string with no spaces:
     let rowString = board[i].join('');
+    // compare rowString against playerString to detect horizontal win:
     if(rowString == playerString) {
       return true;
     }
@@ -54,7 +59,7 @@ function horizontalWin() {
 }
 
 function verticalWin() {
-  // brute force method that i'm not super happy with:
+  // brute force method that i'm not super happy with, checking each possible win iteration using && and || in an if statement:
   if(
     (board[0][0] == playerTurn && board[1][0] == playerTurn && board[2][0] == playerTurn) ||
     (board[0][1] == playerTurn && board[1][1] == playerTurn && board[2][1] == playerTurn) ||
@@ -66,9 +71,11 @@ function verticalWin() {
 }
 
 let diagonalWin = () => {
+  // check middle square first, because it can't be a diagonal win if the middle square isn't occupied:
   if( board[1][1] != playerTurn ) {
     return false;
   }
+  // else brute force check the remaining spaces required to make a diagonal win:
   else if((board[0][0] == playerTurn && board[2][2] == playerTurn) || 
           (board[0][2] == playerTurn && board[2][0] == playerTurn)) {
     return true;
@@ -76,6 +83,7 @@ let diagonalWin = () => {
   else return false;
 }
 
+// make checkForWin return true if any of the win state checks are true:
 function checkForWin() {
   if( horizontalWin() || verticalWin() || diagonalWin() ) {
     return true;
@@ -112,6 +120,9 @@ let choiceChecker = (row, column) => {
 // create function to flip turn (just to make it easier to read in the ticTacToe function):
 let flipTurn = () => { playerTurn == 'X' ? playerTurn = 'O' : playerTurn = 'X'; }
 
+// create turn counter variable as storage to help determine a tie/cat's game:
+let turnCount = 1;
+
 function ticTacToe(row, column) {
   // Check if turn is valid:
   let isValid = choiceChecker(row, column);
@@ -126,12 +137,21 @@ function ticTacToe(row, column) {
   // or else put the current turn ('X' or 'O') in the array space represented by the inputs:
   else {
     board[row][column] = playerTurn;
-    // check if there's a win and then flip the turn:
+    // check if there's a win, if so log it and reset the board:
     if(checkForWin()){
       console.log(`${playerTurn} wins!`);
       reset();
     }
-    else flipTurn();
+    // or else if there's no winner and all the spaces are full, log tie game and reset:
+    else if( !checkForWin() && turnCount == 9 ) {
+      console.log("Cat's game! Tie!");
+      reset();
+    }
+    // or else flip the turn and add 1 to the turn counter:
+    else {
+      flipTurn();
+      turnCount++;
+    }
   }
 }
 
