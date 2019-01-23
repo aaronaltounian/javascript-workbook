@@ -42,7 +42,6 @@ function horizontalWin() {
     }
     else return false;
   }
-
   // alternative method for row win state using .every():
   // if(
   //   (board[0].every(x => x == playerTurn)) ||
@@ -55,7 +54,15 @@ function horizontalWin() {
 }
 
 function verticalWin() {
-  // Your code here
+  // brute force method that i'm not super happy with:
+  if(
+    (board[0][0] == playerTurn && board[1][0] == playerTurn && board[2][0] == playerTurn) ||
+    (board[0][1] == playerTurn && board[1][1] == playerTurn && board[2][1] == playerTurn) ||
+    (board[0][2] == playerTurn && board[1][2] == playerTurn && board[2][2] == playerTurn)
+  ) {
+    return true;
+  }
+  else return false;
 }
 
 let diagonalWin = () => {
