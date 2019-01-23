@@ -23,24 +23,109 @@ function printBoard() {
   console.log('2 ' + board[2].join(' | '));
 }
 
+let reset = () => {
+  board = [
+    [' ', ' ', ' '],
+    [' ', ' ', ' '],
+    [' ', ' ', ' ']
+  ];
+  playerTurn = 'X';
+}
+
+let playerString = playerTurn + playerTurn + playerTurn;
 function horizontalWin() {
-  // Your code here
+  // using for/in with string comparators and joining the row arrays together:
+  for( let i in board ) {
+    let rowString = board[i].join('');
+    if(rowString == playerString) {
+      return true;
+    }
+    else return false;
+  }
+
+  // alternative method for row win state using .every():
+  // if(
+  //   (board[0].every(x => x == playerTurn)) ||
+  //   (board[1].every(x => x == playerTurn)) ||
+  //   (board[2].every(x => x == playerTurn))
+  // ) {
+  //   return true;
+  // }
+  // else return false;
 }
 
 function verticalWin() {
   // Your code here
 }
 
-function diagonalWin() {
-  // Your code here
+let diagonalWin = () => {
+  if( board[1][1] != playerTurn ) {
+    return false;
+  }
+  else if((board[0][0] == playerTurn && board[2][2] == playerTurn) || 
+          (board[0][2] == playerTurn && board[2][0] == playerTurn)) {
+    return true;
+  }
+  else return false;
 }
 
 function checkForWin() {
-  // Your code here
+  if( horizontalWin() || verticalWin() || diagonalWin() ) {
+    return true;
+  }
+  else return false;
 }
 
+// create a function to return true if the choices are valid (note: added number cases cuz prewritten test wouldn't work with strings):
+let choiceChecker = (row, column) => {
+  switch(row){
+    case '0':
+    case '1':
+    case '2':
+    case 0:
+    case 1:
+    case 2:
+      break;
+    default:
+      return false;
+  }
+  switch(column){
+    case '0':
+    case '1':
+    case '2':
+    case 0:
+    case 1:
+    case 2:
+      return true;
+    default:
+      return false;
+  }
+}
+
+// create function to flip turn (just to make it easier to read in the ticTacToe function):
+let flipTurn = () => { playerTurn == 'X' ? playerTurn = 'O' : playerTurn = 'X'; }
+
 function ticTacToe(row, column) {
-  // Your code here
+  // Check if turn is valid:
+  let isValid = choiceChecker(row, column);
+  // If turn is not valid, say so:
+  if(!isValid) {
+    console.log('Try again, enter a valid row and column!');
+  }
+  // else if chosen space is already occupied, say so:
+  else if(board[row][column] != ' ') {
+    console.log('That space is already taken, try again!');
+  }
+  // or else put the current turn ('X' or 'O') in the array space represented by the inputs:
+  else {
+    board[row][column] = playerTurn;
+    // check if there's a win and then flip the turn:
+    if(checkForWin()){
+      console.log(`${playerTurn} wins!`);
+      reset();
+    }
+    else flipTurn();
+  }
 }
 
 function getPrompt() {
@@ -54,8 +139,6 @@ function getPrompt() {
   });
 
 }
-
-
 
 // Tests
 
