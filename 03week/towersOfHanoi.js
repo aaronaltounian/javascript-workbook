@@ -86,7 +86,7 @@ let towersOfHanoi = (startStack, endStack) => {
   // if it's valid and legal, move the piece:
   else {
     // pop the final element in the array defined by startStack, and push it to the array defined by endStack:
-    stacks[endStack].push(stacks[startStack].pop());
+    stacks[endStack].push( stacks[startStack].pop() );
     // add one to the number of moves which have occured:
     moveCount++
   }
