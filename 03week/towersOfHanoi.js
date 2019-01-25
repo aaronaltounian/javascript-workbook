@@ -90,7 +90,7 @@ let towersOfHanoi = (startStack, endStack) => {
     // add one to the number of moves which have occured:
     moveCount++
   }
-  // see if checkForWin() evaluates as true, and if so log "You win!" and reset the board:
+  // see if checkForWin() evaluates as true:
   if( checkForWin() ) {
     // if game is won in less moves than the best score (or if it's the first score), update best score:
     if( (moveCount < bestCount) || (bestCount == 0) ) {
