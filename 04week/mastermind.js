@@ -11,11 +11,13 @@ const rl = readline.createInterface({
 let board = [];
 let solution = '';
 let letters = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'];
+let youHaveWon = false;
 
 // create function to reset game after win/loss:
 let reset = () => {
   board = [];
   solution = '';
+  youHaveWon = false;
   generateSolution();
 }
 
@@ -87,28 +89,30 @@ let outOfTurns = () => {
 }
 
 let mastermind = ( guess ) => {
-  solution = 'abcd';
+   solution = 'abcd';
   guess = guess.toLowerCase();
 
   if( guess.length != 4 || !isValid(guess) ) {
     console.log( colors.red('Try again and guess four valid letters!') )
   }
   else if( guess == solution ) {
+    youHaveWon = true;
     return 'You guessed it!';
   }
   else {
     let hint = generateHint( guess );
-    board.push( `${guess}, ${hint}` );
+    board.push( `${guess} ${hint}` );
   }
 }
 
 function getPrompt() {
-  console.log( colors.bold(`Pick a letter between ${letters[0]} and ${letters[letters.length-1]}!`) );
+  console.log( colors.bold(`--- Pick four letters between ${letters[0]} and ${letters[letters.length-1]}! ---`) );
   rl.question('guess: ', (guess) => {
     mastermind(guess);
     printBoard();
-    if( mastermind( guess ) == 'You guessed it!' ) {
+    if( youHaveWon ) {
       console.log( colors.bold.green('You guessed it!') );
+      console.log( colors.bold.blue('Play again?') );
       reset();
     }
     else outOfTurns();
