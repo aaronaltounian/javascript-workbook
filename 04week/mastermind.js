@@ -12,12 +12,21 @@ let board = [];
 let solution = '';
 let letters = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'];
 
+// create function to reset game after win/loss:
+let reset = () => {
+  board = [];
+  solution = '';
+  generateSolution();
+}
+
+// print function to add items to 'board' array in order to display previous guesses as well as generate turn count:
 function printBoard() {
   for (let i = 0; i < board.length; i++) {
     console.log(board[i]);
   }
 }
 
+// generate random solution based on the letters array:
 function generateSolution() {
   for (let i = 0; i < 4; i++) {
     const randomIndex = getRandomInt(0, letters.length);
@@ -25,10 +34,12 @@ function generateSolution() {
   }
 }
 
+// define getRandomInt function for use in the generateSolution function:
 function getRandomInt(min, max) {
   return Math.floor(Math.random() * (max - min)) + min;
 }
 
+// generate hint by displaying both the number of correctly guessed letter locations, as well as the number of correctly guessed letters are not in the right order:
 function generateHint( guess ) {
   let solutionArray = solution.split('');
   let guessArray = guess.split('');
@@ -53,23 +64,54 @@ function generateHint( guess ) {
   //return colors.red(correctLetterLocations) + '-' + colors.white(correctLetters) ;
 }
 
-function mastermind( guess ) {
-  // solution = 'abcd'; // Comment this out to generate a random solution
-  if( guess == solution ) {
-    console.log('You guessed it!');
+let isValid = ( guess ) => {
+  let validCount = 0;
+  for( let character of guess ) {
+    for( let letter of letters) {
+      if( character == letter ) {
+        validCount++;
+      }
+    }
+  }
+  if( validCount == 4 ) return true;
+  else return false;
+}
+
+let outOfTurns = () => {
+  if( board.length == 10 ) {
+    console.log( colors.bold.bgRed(`You ran out of turns! The solution was ${solution}.`) );
+    console.log( colors.blue('Try again?') );
+    reset();
+  }
+  else console.log(`Guess again. You've made ${board.length} turns out of 10.`);
+}
+
+let mastermind = ( guess ) => {
+  solution = 'abcd';
+  guess = guess.toLowerCase();
+
+  if( guess.length != 4 || !isValid(guess) ) {
+    console.log( colors.red('Try again and guess four valid letters!') )
+  }
+  else if( guess == solution ) {
     return 'You guessed it!';
   }
   else {
     let hint = generateHint( guess );
-    board.push(`Guess: ${guess}, hint: ${hint}`);
+    board.push( `${guess}, ${hint}` );
   }
 }
 
-
 function getPrompt() {
+  console.log( colors.bold(`Pick a letter between ${letters[0]} and ${letters[letters.length-1]}!`) );
   rl.question('guess: ', (guess) => {
     mastermind(guess);
     printBoard();
+    if( mastermind( guess ) == 'You guessed it!' ) {
+      console.log( colors.bold.green('You guessed it!') );
+      reset();
+    }
+    else outOfTurns();
     getPrompt();
   });
 }
@@ -90,10 +132,10 @@ if (typeof describe === 'function') {
 
   describe('#generateHint()', () => {
     it('should generate hints', () => {
-      assert.equal(generateHint('abdc'), '2-2');
+      assert.strictEqual(generateHint('abdc'), '2-2');
     });
     it('should generate hints if solution has duplicates', () => {
-      assert.equal(generateHint('aabb'), '1-1');
+      assert.strictEqual(generateHint('aabb'), '1-1');
     });
 
   });
