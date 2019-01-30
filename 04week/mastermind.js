@@ -2,6 +2,7 @@
 
 const assert = require('assert');
 const readline = require('readline');
+const colors = require('colors');
 const rl = readline.createInterface({
   input: process.stdin,
   output: process.stdout
@@ -28,13 +29,40 @@ function getRandomInt(min, max) {
   return Math.floor(Math.random() * (max - min)) + min;
 }
 
-function generateHint() {
-  // your code here
+function generateHint( guess ) {
+  let solutionArray = solution.split('');
+  let guessArray = guess.split('');
+  let correctLetterLocations = 0;
+  let correctLetters = 0;
+
+  for( let i = 0; i < solutionArray.length; i++ ) {
+    if( solutionArray[i] == guessArray[i] ) {
+      correctLetterLocations++;
+      solutionArray[i] = null;
+    }
+  }
+
+  for( let i = 0; i < solutionArray.length; i++ ) {
+    let targetIndex = solutionArray.indexOf( guessArray[i] );
+    if( targetIndex > -1 ) {
+      correctLetters++;
+      solutionArray[targetIndex] = null;
+    }
+  }
+  return `${correctLetterLocations}-${correctLetters}`;
+  //return colors.red(correctLetterLocations) + '-' + colors.white(correctLetters) ;
 }
 
-function mastermind(guess) {
-  solution = 'abcd'; // Comment this out to generate a random solution
-  // your code here
+function mastermind( guess ) {
+  // solution = 'abcd'; // Comment this out to generate a random solution
+  if( guess == solution ) {
+    console.log('You guessed it!');
+    return 'You guessed it!';
+  }
+  else {
+    let hint = generateHint( guess );
+    board.push(`Guess: ${guess}, hint: ${hint}`);
+  }
 }
 
 
