@@ -85,11 +85,11 @@ let outOfTurns = () => {
     console.log( colors.blue('Try again?') );
     reset();
   }
-  else console.log(`Guess again. You've made ${board.length} turns out of 10.`);
+  else console.log(`Guess again. You've made ${board.length} turn(s) out of 10.`);
 }
 
 let mastermind = ( guess ) => {
-   solution = 'abcd';
+  // solution = 'abcd';
   guess = guess.toLowerCase();
 
   if( guess.length != 4 || !isValid(guess) ) {
