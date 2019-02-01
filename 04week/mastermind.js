@@ -115,12 +115,12 @@ let mastermind = ( guess ) => {
 
   // if guess length is not exactly 4 characters, or if the guess is not valid per the isValid function, log try again message:
   if( guess.length != 4 || !isValid(guess) ) {
-    console.log( colors.red('Try again and guess four valid letters!') )
+    console.log( colors.red('Try again and guess four valid letters!') );
   }
   // or else if the guess is equal to the solution, set youHaveWon boolean to true:
   else if( guess == solution ) {
     let hint = generateHint( guess );
-    board.push( `${guess} ${hint}` )
+    board.push( `${guess} ${hint}` );
     youHaveWon = true;
     return 'You guessed it!';
   }
