@@ -108,7 +108,7 @@ let outOfTurns = () => {
 
 let mastermind = ( guess ) => {
   // solution reassignment for troubleshooting use (leave commented for normal gameplay):
-  // solution = 'abcd';
+   solution = 'abcd';
   
   // make guess lowercase to avoid errors caused by unexpected capitalization:
   guess = guess.toLowerCase();
@@ -119,6 +119,8 @@ let mastermind = ( guess ) => {
   }
   // or else if the guess is equal to the solution, set youHaveWon boolean to true:
   else if( guess == solution ) {
+    let hint = generateHint( guess );
+    board.push( `${guess} ${hint}` )
     youHaveWon = true;
     return 'You guessed it!';
   }
@@ -140,7 +142,7 @@ function getPrompt() {
     printBoard();
     // if youHaveWon variable is true (see line 121), log win message and reset:
     if( youHaveWon ) {
-      console.log( colors.bold.green('You guessed it!') );
+      console.log( colors.bold.green(`You guessed it in ${board.length} turns! The answer was ${solution}`) );
       console.log( colors.bold.blue('Play again?') );
       reset();
     }
