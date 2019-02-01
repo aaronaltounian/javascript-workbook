@@ -2,6 +2,12 @@
 
 let assert = require('assert');
 let colors = require('colors');
+let readline = require('readline');
+
+const rl = readline.createInterface({
+  input: process.stdin,
+  output: process.stdout
+});
 
 // object to define which jobs can occupy which ships:
 let jobTypes = {
@@ -69,16 +75,84 @@ class Ship {
   }
 }
 
-// some stuff i used to test/run the program, just keeping it here in case i need to use it again:
+// was trying to make this into something you can interact with via cli, really just made a mess tho:
 
 // let crewMember1 = new CrewMember('Peter', 'pilot', 'surfing');
 // let crewMember2 = new CrewMember('John', 'commander', 'crosswords');
 // let crewMember3 = new CrewMember('Tanto', 'mechanic', 'smashing things');
 // let crewMember4 = new CrewMember('Judith', 'programmer', 'restoring cars');
 
-// let mav = new Ship('Mars Ascent Vehicle', 'MAV', 'Ascend into low orbit');
+// let mav = new Ship('Mars Ascent Vehicle', 'MAV', 'Ascending into low orbit');
 // let hermes = new Ship('Helical Electromagnetic Rover Matriculating Exo Ship', 'Main Ship', 'Interplanetary Space Travel');
 // let reparo = new Ship('Reparo', 'Repair Ship', 'Fixing Broken Shit...');
+
+// let crew;
+// let ship;
+
+// const determineCrew = function(number) {
+//   switch(number){
+//     case '1':
+//       crew = crewMember1;
+//       break;
+//     case '2':
+//       crew = crewMember2;
+//       break;
+//     case '3':
+//       crew = crewMember3;
+//       break;
+//     case '4':
+//       crew = crewMember4;
+//       break;
+//     default:
+//       console.log('That is not a valid crew member.');
+//   }
+// }
+
+// const determineShip = function(ship) {
+//   ship = ship.toLowerCase().trim();
+//   switch(ship) {
+//     case 'mav':
+//       ship = mav;
+//       break;
+//     case 'hermes':
+//       ship = hermes;
+//       break;
+//     case 'reparo':
+//       ship = reparo;
+//       break;
+//     default:
+//       console.log('That is not a valid ship.');
+//   }
+// }
+
+// const crewToShip = function(crew, ship) {
+//   if( !crew.enterShip(ship) ) {
+//     crew.enterShip(ship);
+//     ship.missionStatement();
+//     crewToShip(crew, ship);
+//   }
+//   else {
+//     crew.enterShip(ship);
+//     console.log(`Mission confirmed! This ship is occupied by a ${crew.job} and is designed for ${ship.missionStatement()}!`)
+//     console.log(`Launching Mission...`);
+//   }
+// }
+
+// const travelToMars = function() {
+//   rl.question(`Choose crew member 1, 2, 3, or 4! `, (number) => {
+//     determineCrew(number);
+//     console.log(`Crew member ${number}'s name is ${crew.name}, their job is ${crew.job} and their special skill is ${crew.specialSkill}.`)
+//     rl.question(`Put crew member into which ship? (mav, hermes, or reparo) `, (ship) => {
+//       determineShip(ship);
+//       // crewToShip(crew, ship);
+//       console.log(crew);
+//       console.log(ship);
+//     })
+//   })
+// }
+// travelToMars();
+
+// some stuff i used for manual testing:
 
 // crewMember1.enterShip(mav);
 // crewMember1.enterShip(hermes);
