@@ -2,6 +2,7 @@
 
 let assert = require('assert');
 
+// object to define which jobs can occupy which ships:
 let jobTypes = {
   pilot: 'MAV',
   mechanic: 'Repair Ship',
@@ -9,7 +10,49 @@ let jobTypes = {
   programmer: 'Any Ship!'
 };
 
-// Your code here
+// class to construct new crew members & define a function to enter ship:
+class CrewMember {
+  constructor( name, job, specialSkill ) {
+    // make new property keys for the new crewmember and use the parameters passed in for the values
+    this.name = name,
+    this.job = job.toLowerCase(),
+    this.specialSkill = specialSkill
+    // create property key named ship and set it to null for now:
+    this.ship = null;
+  }
+
+  // function to enter ship:
+  enterShip( ship ) {
+    // iterate through each property in jobTypes:
+    for( let key in jobTypes ) {
+      // if the current property key in jobTypes equals this crewmember's job, AND the value of the current property key equals the ship's type, push this crewmember onto the ship's crew array, and set this crewmember's ship to the ship that was passed into the function:
+      if( key == this.job && jobTypes[key] == ship.type ) {
+        ship.crew.push(this);
+        this.ship = ship;
+      }
+    }
+  }
+}
+
+// class to construct new ships and define a function to run a mission:
+class Ship {
+  constructor( name, type, ability ) {
+    // create property keys and use the passed in parameters to set values:
+    this.name = name,
+    this.type = type,
+    this.ability = ability,
+    // also create empty array called crew to push crewmembers onto using enterShip function:
+    this.crew = []
+  }
+
+  // create function to check if a ship has a crew & can therefore go on a mission:
+  missionStatement() {
+    // if this ship's crew length is not 1, no mission can occur:
+    if( this.crew.length !== 1 ) return "Can't perform a mission yet.";
+    // or else if the ship has a crewmember, return the mission ability:
+    else return this.ability;
+  }
+}
 
 //tests
 if (typeof describe === 'function'){
