@@ -1,6 +1,7 @@
 'use strict';
 
 let assert = require('assert');
+let colors = require('colors');
 
 // object to define which jobs can occupy which ships:
 let jobTypes = {
@@ -23,14 +24,27 @@ class CrewMember {
 
   // function to enter ship:
   enterShip( ship ) {
+    let validEntry;
     // iterate through each property in jobTypes:
-    for( let key in jobTypes ) {
-      // if the current property key in jobTypes equals this crewmember's job, AND the value of the current property key equals the ship's type, push this crewmember onto the ship's crew array, and set this crewmember's ship to the ship that was passed into the function:
-      if( key == this.job && jobTypes[key] == ship.type ) {
-        ship.crew.push(this);
-        this.ship = ship;
+    if( this.job == 'programmer' ) {
+      validEntry = true;
+    }
+    else {
+      for( let key in jobTypes ) {
+        // if the current property key in jobTypes equals this crewmember's job, AND the value of the current property key equals the ship's type, push this crewmember onto the ship's crew array, and set this crewmember's ship to the ship that was passed into the function:
+        if( key == this.job && jobTypes[key] == ship.type ) {
+          validEntry = true;
+          break;
+          // ship.crew.push(this);
+          // this.ship = ship;
+        }
       }
     }
+    if( validEntry ) {
+      ship.crew.push(this);
+      this.ship = ship;
+    }
+    else console.log( colors.red( `${this.job.charAt(0).toUpperCase()}${this.job.slice(1)}s can't enter the ${ship.name}!` ) );
   }
 }
 
@@ -53,6 +67,22 @@ class Ship {
     else return this.ability;
   }
 }
+
+let crewMember1 = new CrewMember('Peter', 'pilot', 'surfing');
+let crewMember2 = new CrewMember('John', 'commander', 'crosswords');
+let crewMember3 = new CrewMember('Tanto', 'mechanic', 'smashing things');
+let crewMember4 = new CrewMember('Judith', 'programmer', 'restoring cars');
+
+let mav = new Ship('Mars Ascent Vehicle', 'MAV', 'Ascend into low orbit');
+let hermes = new Ship('Helical Electromagnetic Rover Matriculating Exo Ship', 'Main Ship', 'Interplanetary Space Travel');
+let reparo = new Ship('Reparo', 'Repair Ship', 'Fixing Broken Shit...');
+
+crewMember1.enterShip(mav);
+crewMember1.enterShip(hermes);
+crewMember2.enterShip(hermes);
+crewMember3.enterShip(reparo);
+crewMember4.enterShip(mav);
+crewMember4.enterShip(hermes);
 
 //tests
 if (typeof describe === 'function'){
