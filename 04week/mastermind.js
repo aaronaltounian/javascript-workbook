@@ -108,7 +108,7 @@ let outOfTurns = () => {
 
 let mastermind = ( guess ) => {
   // solution reassignment for troubleshooting use (leave commented for normal gameplay):
-   solution = 'abcd';
+  // solution = 'abcd';
   
   // make guess lowercase to avoid errors caused by unexpected capitalization:
   guess = guess.toLowerCase();
@@ -155,7 +155,7 @@ function getPrompt() {
 // Tests
 
 if (typeof describe === 'function') {
-  solution = 'abcd';
+  // solution = 'abcd';
   describe('#mastermind()', () => {
     it('should register a guess and generate hints', () => {
       mastermind('aabb');
