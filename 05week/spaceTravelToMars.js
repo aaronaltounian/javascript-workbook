@@ -45,6 +45,7 @@ class CrewMember {
       this.ship = ship;
     }
     else console.log( colors.red( `${this.job.charAt(0).toUpperCase()}${this.job.slice(1)}s can't enter the ${ship.name}!` ) );
+    return false;
   }
 }
 
@@ -61,28 +62,30 @@ class Ship {
 
   // create function to check if a ship has a crew & can therefore go on a mission:
   missionStatement() {
-    // if this ship's crew length is not 1, no mission can occur:
-    if( this.crew.length !== 1 ) return "Can't perform a mission yet.";
+    // if this ship's crew length is empty, no mission can occur:
+    if( this.crew.length == 0 ) return "Can't perform a mission yet.";
     // or else if the ship has a crewmember, return the mission ability:
     else return this.ability;
   }
 }
 
-let crewMember1 = new CrewMember('Peter', 'pilot', 'surfing');
-let crewMember2 = new CrewMember('John', 'commander', 'crosswords');
-let crewMember3 = new CrewMember('Tanto', 'mechanic', 'smashing things');
-let crewMember4 = new CrewMember('Judith', 'programmer', 'restoring cars');
+// some stuff i used to test/run the program, just keeping it here in case i need to use it again:
 
-let mav = new Ship('Mars Ascent Vehicle', 'MAV', 'Ascend into low orbit');
-let hermes = new Ship('Helical Electromagnetic Rover Matriculating Exo Ship', 'Main Ship', 'Interplanetary Space Travel');
-let reparo = new Ship('Reparo', 'Repair Ship', 'Fixing Broken Shit...');
+// let crewMember1 = new CrewMember('Peter', 'pilot', 'surfing');
+// let crewMember2 = new CrewMember('John', 'commander', 'crosswords');
+// let crewMember3 = new CrewMember('Tanto', 'mechanic', 'smashing things');
+// let crewMember4 = new CrewMember('Judith', 'programmer', 'restoring cars');
 
-crewMember1.enterShip(mav);
-crewMember1.enterShip(hermes);
-crewMember2.enterShip(hermes);
-crewMember3.enterShip(reparo);
-crewMember4.enterShip(mav);
-crewMember4.enterShip(hermes);
+// let mav = new Ship('Mars Ascent Vehicle', 'MAV', 'Ascend into low orbit');
+// let hermes = new Ship('Helical Electromagnetic Rover Matriculating Exo Ship', 'Main Ship', 'Interplanetary Space Travel');
+// let reparo = new Ship('Reparo', 'Repair Ship', 'Fixing Broken Shit...');
+
+// crewMember1.enterShip(mav);
+// crewMember1.enterShip(hermes);
+// crewMember2.enterShip(hermes);
+// crewMember3.enterShip(reparo);
+// crewMember4.enterShip(mav);
+// crewMember4.enterShip(hermes);
 
 //tests
 if (typeof describe === 'function'){
@@ -102,6 +105,37 @@ if (typeof describe === 'function'){
       assert.equal(crewMember1.ship, mav);
       assert.equal(mav.crew.length, 1);
       assert.equal(mav.crew[0], crewMember1);
+    });
+
+    it('should not allow a crewmember into the wrong ship', function(){
+      let crewMember1 = new CrewMember('Peter', 'pilot', 'surfing');
+      let crewMember2 = new CrewMember('John', 'commander', 'crosswords');
+      let crewMember3 = new CrewMember('Tanto', 'mechanic', 'smashing things');
+      let mav = new Ship('Mars Ascent Vehicle', 'MAV', 'Ascend into low orbit');
+      let hermes = new Ship('Helical Electromagnetic Rover Matriculating Exo Ship', 'Main Ship', 'Interplanetary Space Travel');
+      let reparo = new Ship('Reparo', 'Repair Ship', 'Fixing Broken Shit...');
+      assert.equal(crewMember1.enterShip(hermes), false);
+      assert.equal(crewMember2.enterShip(reparo), false);
+      assert.equal(crewMember3.enterShip(mav), false)
+    });
+
+    it('should allow programmer into any ship', function(){
+      let crewMember1 = new CrewMember('Judith Resnik', 'programmer', 'engineering');
+      let mav = new Ship('Mars Ascent Vehicle', 'MAV', 'Ascend into low orbit');
+      let hermes = new Ship('Helical Electromagnetic Rover Matriculating Exo Ship', 'Main Ship', 'Interplanetary Space Travel');
+      let reparo = new Ship('Reparo', 'Repair Ship', 'Fixing Broken Shit...');
+      crewMember1.enterShip(mav);
+      assert.equal(crewMember1.ship, mav);
+      assert.equal(mav.crew.length, 1);
+      assert.equal(mav.crew[0], crewMember1);
+      crewMember1.enterShip(hermes);
+      assert.equal(crewMember1.ship, hermes);
+      assert.equal(hermes.crew.length, 1);
+      assert.equal(hermes.crew[0], crewMember1);
+      crewMember1.enterShip(reparo);
+      assert.equal(crewMember1.ship, reparo);
+      assert.equal(reparo.crew.length, 1);
+      assert.equal(reparo.crew[0], crewMember1);
     });
   });
 
