@@ -8,8 +8,9 @@ const rl = readline.createInterface({
 });
 
 
-function Checker() {
+class Checker {
   // Your code here
+
 }
 
 class Board {
@@ -29,7 +30,7 @@ class Board {
   }
   viewGrid() {
     // add our column numbers
-    let string = "  0 1 2 3 4 5 6 7\n";
+    let string = "  | 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 |\n";// + '-----------------------------------' + '\n';
     for (let row = 0; row < 8; row++) {
       // we start with our row number in our array
       const rowOfCheckers = [row];
@@ -45,14 +46,15 @@ class Board {
         }
       }
       // join the rowOfCheckers array to a string, separated by a space
-      string += rowOfCheckers.join(' ');
+      string += rowOfCheckers.join(' | ') + ' |';
       // add a 'new line'
-      string += "\n";
+      string += "\n";// + '-----------------------------------' + '\n';
     }
     console.log(string);
   }
 
   // Your code here
+
 }
 
 class Game {
@@ -61,6 +63,9 @@ class Game {
   }
   start() {
     this.board.createGrid();
+  }
+  moveChecker( whichPiece, toWhere ) {
+    game.board.grid[toWhere[0]].splice( toWhere[1], 1, game.board.grid[whichPiece[0]][whichPiece[1]] );
   }
 }
 
