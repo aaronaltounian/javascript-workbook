@@ -87,7 +87,6 @@ class Ship {
 // let reparo = new Ship('Reparo', 'Repair Ship', 'Fixing Broken Shit...');
 
 // let crew;
-// let ship;
 
 // const determineCrew = function(number) {
 //   switch(number){
@@ -127,12 +126,12 @@ class Ship {
 
 // const crewToShip = function(crew, ship) {
 //   if( !crew.enterShip(ship) ) {
-//     crew.enterShip(ship);
+//     crew.prototype.enterShip(ship);
 //     ship.missionStatement();
 //     crewToShip(crew, ship);
 //   }
 //   else {
-//     crew.enterShip(ship);
+//     crew.prototype.enterShip(ship);
 //     console.log(`Mission confirmed! This ship is occupied by a ${crew.job} and is designed for ${ship.missionStatement()}!`)
 //     console.log(`Launching Mission...`);
 //   }
@@ -144,9 +143,9 @@ class Ship {
 //     console.log(`Crew member ${number}'s name is ${crew.name}, their job is ${crew.job} and their special skill is ${crew.specialSkill}.`)
 //     rl.question(`Put crew member into which ship? (mav, hermes, or reparo) `, (ship) => {
 //       determineShip(ship);
-//       // crewToShip(crew, ship);
-//       console.log(crew);
-//       console.log(ship);
+//       crewToShip(crew, ship);
+//       // console.log(crew);
+//       // console.log(ship);
 //     })
 //   })
 // }
