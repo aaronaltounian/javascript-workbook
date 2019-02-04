@@ -40,7 +40,7 @@ function generateSolution() {
 
 // define getRandomInt function for use in the generateSolution function:
 function getRandomInt(min, max) {
-  return Math.floor(Math.random() * (max - min)) + min;
+  return Math.floor( Math.random() * (max - min) ) + min;
 }
 
 // generate hint by displaying both the number of correctly guessed letter locations, as well as the number of correctly guessed letters are not in the right order:
@@ -119,8 +119,6 @@ let mastermind = ( guess ) => {
   }
   // or else if the guess is equal to the solution, set youHaveWon boolean to true:
   else if( guess == solution ) {
-    let hint = generateHint( guess );
-    board.push( `${guess} ${hint}` );
     youHaveWon = true;
     return 'You guessed it!';
   }
@@ -136,13 +134,13 @@ function getPrompt() {
   console.log( colors.bold(`--- Pick four letters between ${letters[0]} and ${letters[letters.length-1]}! ---`) );
   // begin prompt:
   rl.question('guess: ', (guess) => {
-    // run the entered guess through the mastermind function:
+    // run the user's guess through the mastermind function:
     mastermind(guess);
     // print the board which displays all guesses and hints:
     printBoard();
     // if youHaveWon variable is true (see line 121), log win message and reset:
     if( youHaveWon ) {
-      console.log( colors.bold.green(`You guessed it in ${board.length} turns! The answer was ${solution}`) );
+      console.log( colors.bold.green(`You guessed it in ${board.length + 1} turn(s)! The answer was ${solution}`) );
       console.log( colors.bold.blue('Play again?') );
       reset();
     }
