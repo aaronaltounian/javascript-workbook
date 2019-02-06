@@ -2,12 +2,6 @@
 
 let assert = require('assert');
 let colors = require('colors');
-let readline = require('readline');
-
-const rl = readline.createInterface({
-  input: process.stdin,
-  output: process.stdout
-});
 
 // object to define which jobs can occupy which ships:
 let jobTypes = {
@@ -17,148 +11,117 @@ let jobTypes = {
   programmer: 'Any Ship!'
 };
 
-// class to construct new crew members & define a function to enter ship:
-class CrewMember {
-  constructor( name, job, specialSkill ) {
-    // make new property keys for the new crewmember and use the parameters passed in for the values
-    this.name = name,
-    this.job = job.toLowerCase(),
-    this.specialSkill = specialSkill
-    // create property key named ship and set it to null for now:
-    this.ship = null;
-  }
+// approach using function and prototype:
+let CrewMember = function( name, job, specialSkill ) {
+  this.name = name;
+  this.job = job.toLowerCase();
+  this.specialSkill = specialSkill;
+}
 
-  // function to enter ship:
-  enterShip( ship ) {
-    let validEntry;
+CrewMember.prototype.enterShip = function( ship ) {
+  // need to determine if the crewmember can enter the selected ship:
+  let canEnterShip = false;
+  // if the crewmember's job is 'programmer', they can enter any ship:
+  if( this.job == 'programmer' ) {
+    canEnterShip = true;
+  }
+  // or else figure out if the crewmember can enter the ship based on their job (defined in the jobTypes array):
+  else {
     // iterate through each property in jobTypes:
-    if( this.job == 'programmer' ) {
-      validEntry = true;
-    }
-    else {
-      for( let key in jobTypes ) {
-        // if the current property key in jobTypes equals this crewmember's job, AND the value of the current property key equals the ship's type, push this crewmember onto the ship's crew array, and set this crewmember's ship to the ship that was passed into the function:
-        if( key == this.job && jobTypes[key] == ship.type ) {
-          validEntry = true;
-          break;
-          // ship.crew.push(this);
-          // this.ship = ship;
-        }
+    for( let key in jobTypes ) {
+      // if the current property key in jobTypes equals this crewmember's job, AND the value of the current property key equals the ship's type,set canEnterShip to true and break out of the loop:
+      if( key == this.job && jobTypes[key] == ship.type ) {
+        canEnterShip = true;
+        break;
       }
     }
-    if( validEntry ) {
-      ship.crew.push(this);
-      this.ship = ship;
-    }
-    else console.log( colors.red( `${this.job.charAt(0).toUpperCase()}${this.job.slice(1)}s can't enter the ${ship.name}!` ) );
+  }
+  // if crew member can enter ship, push this crewmember onto the ship's crew array, and set this crewmember's ship to the entered ship:
+  if( canEnterShip ) {
+    ship.crew.push(this);
+    this.ship = ship;
+  }
+  // or else display error message:
+  else {
+    console.log( colors.red( `${this.job.charAt(0).toUpperCase()}${this.job.slice(1)}s can't enter the ${ship.name}!` ) );
+    // necessary for the tests to pass:
     return false;
   }
 }
 
-// class to construct new ships and define a function to run a mission:
-class Ship {
-  constructor( name, type, ability ) {
-    // create property keys and use the passed in parameters to set values:
-    this.name = name,
-    this.type = type,
-    this.ability = ability,
-    // also create empty array called crew to push crewmembers onto using enterShip function:
-    this.crew = []
-  }
-
-  // create function to check if a ship has a crew & can therefore go on a mission:
-  missionStatement() {
-    // if this ship's crew length is empty, no mission can occur:
-    if( this.crew.length == 0 ) return "Can't perform a mission yet.";
-    // or else if the ship has a crewmember, return the mission ability:
-    else return this.ability;
-  }
+let Ship = function( name, type, ability ) {
+  this.name = name;
+  this.type = type;
+  this.ability = ability;
+  this.crew = [];
 }
 
-// was trying to make this into something you can interact with via cli, really just made a mess tho:
+Ship.prototype.missionStatement = function() {
+      // if this ship's crew length is empty, no mission can occur:
+      if( this.crew.length == 0 ) return "Can't perform a mission yet.";
+      // or else if the ship has a crewmember, return the mission ability:
+      else return this.ability;
+}
 
-// let crewMember1 = new CrewMember('Peter', 'pilot', 'surfing');
-// let crewMember2 = new CrewMember('John', 'commander', 'crosswords');
-// let crewMember3 = new CrewMember('Tanto', 'mechanic', 'smashing things');
-// let crewMember4 = new CrewMember('Judith', 'programmer', 'restoring cars');
+// approach using classes and constructors:
 
-// let mav = new Ship('Mars Ascent Vehicle', 'MAV', 'Ascending into low orbit');
-// let hermes = new Ship('Helical Electromagnetic Rover Matriculating Exo Ship', 'Main Ship', 'Interplanetary Space Travel');
-// let reparo = new Ship('Reparo', 'Repair Ship', 'Fixing Broken Shit...');
+// class to construct new crew members & define a function to enter ship:
+// class CrewMember {
+//   constructor( name, job, specialSkill ) {
+//     // make new property keys for the new crewmember and use the parameters passed in for the values
+//     this.name = name,
+//     this.job = job.toLowerCase(),
+//     this.specialSkill = specialSkill
+//     // create property key named ship and set it to null for now:
+//     this.ship = null;
+//   }
 
-// let crew;
-
-// const determineCrew = function(number) {
-//   switch(number){
-//     case '1':
-//       crew = crewMember1;
-//       break;
-//     case '2':
-//       crew = crewMember2;
-//       break;
-//     case '3':
-//       crew = crewMember3;
-//       break;
-//     case '4':
-//       crew = crewMember4;
-//       break;
-//     default:
-//       console.log('That is not a valid crew member.');
+//   // function to enter ship:
+//   enterShip( ship ) {
+//     let validEntry;
+//     // iterate through each property in jobTypes:
+//     if( this.job == 'programmer' ) {
+//       validEntry = true;
+//     }
+//     else {
+//       for( let key in jobTypes ) {
+//         // if the current property key in jobTypes equals this crewmember's job, AND the value of the current property key equals the ship's type, push this crewmember onto the ship's crew array, and set this crewmember's ship to the ship that was passed into the function:
+//         if( key == this.job && jobTypes[key] == ship.type ) {
+//           validEntry = true;
+//           break;
+//           // ship.crew.push(this);
+//           // this.ship = ship;
+//         }
+//       }
+//     }
+//     if( validEntry ) {
+//       ship.crew.push(this);
+//       this.ship = ship;
+//     }
+//     else console.log( colors.red( `${this.job.charAt(0).toUpperCase()}${this.job.slice(1)}s can't enter the ${ship.name}!` ) );
+//     return false;
 //   }
 // }
 
-// const determineShip = function(ship) {
-//   ship = ship.toLowerCase().trim();
-//   switch(ship) {
-//     case 'mav':
-//       ship = mav;
-//       break;
-//     case 'hermes':
-//       ship = hermes;
-//       break;
-//     case 'reparo':
-//       ship = reparo;
-//       break;
-//     default:
-//       console.log('That is not a valid ship.');
+// class to construct new ships and define a function to run a mission:
+// class Ship {
+//   constructor( name, type, ability ) {
+//     // create property keys and use the passed in parameters to set values:
+//     this.name = name,
+//     this.type = type,
+//     this.ability = ability,
+//     // also create empty array called crew to push crewmembers onto using enterShip function:
+//     this.crew = []
+//   }
+
+//   // create function to check if a ship has a crew & can therefore go on a mission:
+//   missionStatement() {
+//     // if this ship's crew length is empty, no mission can occur:
+//     if( this.crew.length == 0 ) return "Can't perform a mission yet.";
+//     // or else if the ship has a crewmember, return the mission ability:
+//     else return this.ability;
 //   }
 // }
-
-// const crewToShip = function(crew, ship) {
-//   if( !crew.enterShip(ship) ) {
-//     crew.prototype.enterShip(ship);
-//     ship.missionStatement();
-//     crewToShip(crew, ship);
-//   }
-//   else {
-//     crew.prototype.enterShip(ship);
-//     console.log(`Mission confirmed! This ship is occupied by a ${crew.job} and is designed for ${ship.missionStatement()}!`)
-//     console.log(`Launching Mission...`);
-//   }
-// }
-
-// const travelToMars = function() {
-//   rl.question(`Choose crew member 1, 2, 3, or 4! `, (number) => {
-//     determineCrew(number);
-//     console.log(`Crew member ${number}'s name is ${crew.name}, their job is ${crew.job} and their special skill is ${crew.specialSkill}.`)
-//     rl.question(`Put crew member into which ship? (mav, hermes, or reparo) `, (ship) => {
-//       determineShip(ship);
-//       crewToShip(crew, ship);
-//       // console.log(crew);
-//       // console.log(ship);
-//     })
-//   })
-// }
-// travelToMars();
-
-// some stuff i used for manual testing:
-
-// crewMember1.enterShip(mav);
-// crewMember1.enterShip(hermes);
-// crewMember2.enterShip(hermes);
-// crewMember3.enterShip(reparo);
-// crewMember4.enterShip(mav);
-// crewMember4.enterShip(hermes);
 
 //tests
 if (typeof describe === 'function'){
