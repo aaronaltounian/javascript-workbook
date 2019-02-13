@@ -113,12 +113,11 @@ class Game {
         let killedColumn = endColumn - startColumn > 0 ? startColumn + 1 : endColumn + 1;
 
         this.board.grid[killedRow][killedColumn] = null;
-        this.board.checkers.pop();
-        // let removeChecker = this.board.checkers.indexOf(this.grid[killedRow][killedColumn]);
-        // this.board.checkers.splice(removeChecker, 1);
+        let removeChecker = this.board.checkers.indexOf( this.board.grid[killedRow][killedColumn] );
+        this.board.checkers.splice( removeChecker, 1 );
       }
     }
-    else console.log('Try again with a legal move.');
+    else console.log( 'Try again with a legal move.' );
   }
 }
 
