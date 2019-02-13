@@ -11,7 +11,7 @@ const rl = readline.createInterface({
 function Checker( color ) {
   // Your code here
   // color = 'white' ? this.symbol = String.fromCharCode(0x125CB) : this.symbol = String.fromCharCode(0x125CF);
-  if(color == 'white') this.symbol = String.fromCharCode(0x125CF)
+  if( color == 'white' ) this.symbol = String.fromCharCode(0x125CF)
   else this.symbol = String.fromCharCode(0x125CB);
 }
 
@@ -114,6 +114,8 @@ class Game {
 
         this.board.grid[killedRow][killedColumn] = null;
         this.board.checkers.pop();
+        // let removeChecker = this.board.checkers.indexOf(this.grid[killedRow][killedColumn]);
+        // this.board.checkers.splice(removeChecker, 1);
       }
     }
     else console.log('Try again with a legal move.');
