@@ -3,23 +3,23 @@
 const assert = require('assert');
 
 function forEach(arr, callback) {
-  // Your code here
+  arr.forEach(callback);
 }
 
 function map(arr, callback) {
-  // Your code here
+  return arr.map(x => callback(x));
 }
 
 function filter(arr, callback) {
-  // Your code here
+  return arr.filter(x => callback(x));
 }
 
 function some(arr, callback) {
-  // Your code here
+  return arr.some(x => callback(x));
 }
 
 function every(arr, callback) {
-  // Your code here
+  return arr.every(x => callback(x))
 }
 
 if (typeof describe === 'function') {
