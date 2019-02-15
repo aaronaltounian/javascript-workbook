@@ -3,11 +3,17 @@
 const assert = require('assert');
 
 function forEach(arr, callback) {
-  arr.forEach(callback);
+  // arr.forEach(callback);
+  for( let i = 0; i < arr.length; i++ ) {
+    callback();
+  }
 }
 
 function map(arr, callback) {
-  return arr.map(x => callback(x));
+  // return arr.map(x => callback(x));
+  for( let i = 0; i < arr.length; i++ ) {
+    
+  }
 }
 
 function filter(arr, callback) {
