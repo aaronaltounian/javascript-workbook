@@ -11,21 +11,48 @@ function forEach(arr, callback) {
 
 function map(arr, callback) {
   // return arr.map(x => callback(x));
+  let newArray = [];
   for( let i = 0; i < arr.length; i++ ) {
-    
+    let element = arr[i];
+    newArray.push(callback(element, i, arr))
   }
+  return newArray;
 }
 
 function filter(arr, callback) {
-  return arr.filter(x => callback(x));
+  // return arr.filter(x => callback(x));
+  let newArray = [];
+  for( let i = 0; i < arr.length; i++ ) {
+    let element = arr[i];
+    if(callback(element, i, arr)) newArray.push(element);
+  }
+  return newArray;
 }
 
 function some(arr, callback) {
-  return arr.some(x => callback(x));
+  // return arr.some(x => callback(x));
+  let boolean = false;
+  for( let i = 0; i < arr.length; i++ ) {
+    let element = arr[i];
+    if( callback(element, i, arr) ) {
+      boolean = true;
+      break;
+    }
+  }
+  return boolean;
 }
 
 function every(arr, callback) {
-  return arr.every(x => callback(x))
+  // return arr.every(x => callback(x))
+  let boolean = true;
+  for( let i = 0; i < arr.length; i++ ) {
+    let element = arr[i];
+    if( !callback(element, i, arr) ) {
+      boolean = false;
+      break;
+    }
+  }
+  return boolean;
 }
 
 if (typeof describe === 'function') {
