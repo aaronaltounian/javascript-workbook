@@ -3,8 +3,12 @@
 class TicTacToe extends React.Component {
   constructor(props) {
     super(props);
+    this.state = {
+      squares: Array(9).fill(null),
+      xIsNext: true,
+    }
   }
-
+  
   render() {
     return (
       <div>
@@ -29,3 +33,4 @@ class TicTacToe extends React.Component {
 }
 
 ReactDOM.render(<TicTacToe />, document.getElementById('tic-tac-toe'));
+
