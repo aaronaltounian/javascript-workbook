@@ -1,4 +1,16 @@
-div[data-cell] {
+body {
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.status {
+  width: 300px;
+  text-align: center;
+  margin-bottom: 5px;
+  font-size: 20pt;
+  font-weight: 600;
+}
+
+.square {
   width: 100px;
   height: 100px;
   background-color: #f2f2f2;
@@ -6,6 +18,7 @@ div[data-cell] {
   border: 1px solid #808080;
   font-size: 100px;
   text-align: center;
+  outline: none;
 }
 
 .row {
