@@ -1,32 +1,66 @@
 'use strict';
 
+function Square(props) {
+  return (
+    <button className="square" onClick={props.onClick}>
+      {props.value}
+    </button>
+  )
+}
+
 class TicTacToe extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       squares: Array(9).fill(null),
-      value: null,
       xIsNext: true,
     }
   }
+
+  renderSquare(i) {
+    return (
+      <Square value={this.state.squares[i]}
+      onClick={() => this.handleClick(i)}
+      />
+    )
+  }
+
+  handleClick(i) {
+    const squares = this.state.squares.slice();
+
+    if( calculateWinner(squares) || squares[i] ) return;
+
+    squares[i] = this.state.xIsNext ? 'X' : 'O';
+    this.setState({
+      squares: squares,
+      xIsNext: !this.state.xIsNext,
+    });
+  }
   
   render() {
+
+    let winner = calculateWinner(this.state.squares);
+    let status;
+    if(winner) status = 'Winner: ' + winner;
+    else status = 'Next player: ' + (this.state.xIsNext ? 'X' : 'O')
     return (
       <div>
+        <div className="status">{status}</div>
+        {/* <button className="reset" onClick={this.reset}>Reset</button> */}
         <div className="row">
-          <div data-cell="0"></div>
-          <div data-cell="1"></div>
-          <div data-cell="2"></div>
+          {this.renderSquare(0)}
+          {this.renderSquare(1)}
+          {this.renderSquare(2)}
         </div>
         <div className="row">
-          <div data-cell="3"></div>
-          <div data-cell="4"></div>
-          <div data-cell="5"></div>
+          {this.renderSquare(3)}
+          {this.renderSquare(4)}
+          {this.renderSquare(5)}
         </div>
         <div className="row">
-          <div data-cell="6"></div>
-          <div data-cell="7"></div>
-          <div data-cell="8"></div>
+          {this.renderSquare(6)}
+          {this.renderSquare(7)}
+          {this.renderSquare(8)}
         </div>
       </div>
     );
@@ -35,3 +69,22 @@ class TicTacToe extends React.Component {
 
 ReactDOM.render(<TicTacToe />, document.getElementById('tic-tac-toe'));
 
+function calculateWinner(squares) {
+  const lines = [
+      [0, 1, 2],
+      [3, 4, 5],
+      [6, 7, 8],
+      [0, 3, 6],
+      [1, 4, 7],
+      [2, 5, 8],
+      [0, 4, 8],
+      [2, 4, 6]
+  ];
+  for( let i = 0; i < lines.length; i++ ) {
+      const [a, b, c] = lines[i];
+      if( squares[a] && squares[a] === squares[b] && squares[a] === squares[c] ) {
+          return squares[a];
+      }
+  }
+  return null;
+}
