@@ -12,7 +12,7 @@ class Contacts extends Component {
 
     componentDidMount() {
         let count = 0;
-        while (count < 9) {
+        while (count < 30) {
             fetch('https://uinames.com/api/?ext')
                 .then(response => response.json())
                 .then(data => {
@@ -53,6 +53,13 @@ class Contacts extends Component {
                 <CardGroup className="cardRow">{users[0]}{users[1]}{users[2]}</CardGroup>
                 <CardGroup className="cardRow">{users[3]}{users[4]}{users[5]}</CardGroup>
                 <CardGroup className="cardRow">{users[6]}{users[7]}{users[8]}</CardGroup>
+                <CardGroup className="cardRow">{users[9]}{users[10]}{users[11]}</CardGroup>
+                <CardGroup className="cardRow">{users[12]}{users[13]}{users[14]}</CardGroup>
+                <CardGroup className="cardRow">{users[15]}{users[16]}{users[17]}</CardGroup>
+                <CardGroup className="cardRow">{users[18]}{users[19]}{users[20]}</CardGroup>
+                <CardGroup className="cardRow">{users[21]}{users[22]}{users[23]}</CardGroup>
+                <CardGroup className="cardRow">{users[24]}{users[25]}{users[26]}</CardGroup>
+                <CardGroup className="cardRow">{users[27]}{users[28]}{users[29]}</CardGroup>
             </div>
         )
     }
