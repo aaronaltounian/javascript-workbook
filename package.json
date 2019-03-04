@@ -7,7 +7,6 @@
     "url": "git+https://github.com/AustinCodingAcademy/javascript-workbook.git"
   },
   "scripts": {
-    "lint": "htmllint {*.html,./**/*.html} && stylelint ./**/*.css && eslint .",
     "test": "mocha --no-timeouts",
     "start": "cd . && http-server -c-1",
     "javascripting": "javascripting",
@@ -19,7 +18,6 @@
   },
   "homepage": "https://github.com/AustinCodingAcademy/javascript-workbook#readme",
   "dependencies": {
-    "eslint": "^3.19.0",
     "functional-javascript-workshop": "^1.0.6",
     "htmllint-cli": "github:kevincolten/htmllint-cli",
     "http-server": "^0.11.1",
